@@ -1,0 +1,497 @@
+/* Alap stílusok */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Fejléc cím stílusa */
+.header-content h1 a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.header-content h1 a:hover {
+    opacity: 0.8;
+}
+
+/* Fejléc stílus */
+header {
+    background: linear-gradient(135deg,  #9c617b, #f4a261);
+    color: white;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Legördülő menü */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 4px;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #e2e2e2;
+}
+
+.show {
+    display: block;
+}
+
+/* Fő tartalom */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.welcome-message {
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Művészet kérdés form */
+.art-question {
+    margin: 2rem auto;
+    max-width: 600px;
+    text-align: center;
+}
+
+.art-question h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.art-question textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+    transition: border-color 0.3s;
+}
+
+.art-question textarea:focus {
+    outline: none;
+    border-color: #9c617b;
+}
+
+.art-question button {
+    background: linear-gradient(135deg, #9c617b, #f4a261);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.3s;
+}
+
+.art-question button:hover {
+    opacity: 0.9;
+}
+
+/* Tartalom oldalak */
+.content-page {
+    padding: 2rem;
+    animation: fadeIn 0.5s;
+}
+
+/* Portfolio grid */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.portfolio-item {
+    background: #f0f0f0;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: relative;
+}
+
+.portfolio-item:hover {
+    transform: scale(1.03);
+}
+
+.portfolio-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Képvédelmi réteg */
+.portfolio-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 1;
+}
+
+/* Új stílusok a speciális képelrendezésekhez */
+.dunapart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.dunapart-grid-sub {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.nyomashatalma-single {
+    max-width: 60%;
+    margin: 0 auto;
+    display: block;
+}
+
+.fenyarnyek-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.mindensemmi-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.mindensemmi-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mindensemmi-item {
+    display: flex;
+    flex-direction: column;
+    break-inside: avoid;
+}
+
+.mindensemmi-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.emberalakok-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.emberalakok-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.emberalakok-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.emberalakok-grid-2 .portfolio-item {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.emberalakok-descriptions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    max-width: flex;
+    margin: 0 auto;
+}
+
+.emberalakok-descriptions .project-description-per-image {
+    grid-column: span 1;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.fenyorgona-grid-top {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.fenyorgona-grid-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.project-description {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
+.project-description-per-image {
+    margin-top: 3px;
+    padding: 5px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+/* Tájak container stílusok */
+.tajak-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+.tajak-item {
+    width: 100%;
+    background: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Középre igazítás */
+}
+
+.tajak-item .portfolio-item {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: auto; /* Természetes szélesség */
+    display: inline-block; /* Szélesség a tartalomhoz igazodik */
+}
+
+.tajak-item img {
+    max-width: 100%;
+    height: auto;
+    max-height: 60vh;
+    object-fit: contain;
+    display: block;
+}
+
+.project-description-per-image {
+    margin-top: 5px;
+    padding: 8px 12px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    text-align: center;
+    width: auto; /* Automatikus szélesség */
+    max-width: 100%; /* Maximum a konténer szélessége */
+    box-sizing: border-box;
+    display: inline-block; /* Szélesség a tartalomhoz igazodik */
+}
+
+/* Reszponzív beállítások */
+@media (max-width: 768px) {
+    .tajak-container {
+        max-width: 100%;
+        padding: 0 5px;
+    }
+    
+    .tajak-item img {
+        max-height: 50vh;
+    }
+}
+
+/* Lábléc */
+footer {
+    background: linear-gradient(135deg,  #f4a261, #9c617b);
+    color: white;
+    text-align: left;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Lightbox stílusok */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.lightbox-content img {
+    max-height: 80vh;
+    max-width: 80vw;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 40px;
+    transform: translateY(-50%);
+}
+
+.prev-btn {
+    left: 30px;
+}
+
+.next-btn {
+    right: 30px;
+}
+
+.close-btn:hover,
+.nav-btn:hover {
+    color: #ccc;
+}
+
+#image-caption {
+    color: white;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Reszponzív beállítások */
+@media (max-width: 768px) {
+    .dunapart-grid, 
+    .dunapart-grid-sub,
+    .fenyarnyek-grid,
+    .mindensemmi-grid,
+    .emberalakok-grid-4,
+    .emberalakok-grid-3,
+    .emberalakok-grid-2,
+    .emberalakok-descriptions,
+    .fenyorgona-grid-top,
+    .fenyorgona-grid-bottom {
+        grid-template-columns: 1fr;
+    }
+    
+    .nyomashatalma-single {
+        max-width: 100%;
+    }
+    
+    .emberalakok-grid-2 .portfolio-item,
+    .emberalakok-descriptions {
+        max-width: 100%;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

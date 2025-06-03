@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LászlóMirjamArts</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1><a href="#" id="home-link">László Mirjam Arts</a></h1>
+            <nav>
+                <div class="dropdown">
+                    <button class="nav-button" id="portfolio-btn">Portfólió</button>
+                    <div class="dropdown-content" id="portfolio-dropdown">
+                        <a href="#" data-category="minden-semmi">Minden és a semmi</a>
+                        <a href="#" data-category="tajak">Tájak</a>
+                        <a href="#" data-category="feny-arnyek">Fény-árnyék</a>
+                        <a href="#" data-category="diszito-elemek">Díszítő elemek</a>
+                        <a href="#" data-category="keramia-szobrok">Kerámia szobrok</a>
+                        <a href="#" data-category="sojatekok">Szójátékok</a>
+                        <a href="#" data-category="gondok-megoldasok">Gondok és megoldások</a>
+                        <a href="#" data-category="ember-alakok">Ember alakok</a>
+                        <a href="#" data-category="film-manipulaciok">Film manipulálások</a>
+                    </div>
+                </div>
+                <button class="nav-button" id="about-btn">Rólam</button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Alapértelmezett tartalom -->
+        <div class="welcome-message" id="home-content">
+            <h2>Üdvözöljük a László Mirjam Arts oldalán!</h2>
+            <p>Fedezze fel művészeti alkotásaimat a Portfólió menüpont alatt.</p>
+        </div>
+
+        <!-- Dinamikusan betöltött tartalmak -->
+        <div id="dynamic-content" style="display: none;"></div>
+    </main>
+
+    <footer>
+        <p>Kapcsolat: <a href="mailto:laszlomirjamm@gmail.com">laszlomirjamm@gmail.com</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
