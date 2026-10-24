@@ -137,14 +137,14 @@ window.ART_CATALOG={
     },
     "mindensemmi-koszoru-2025-05": {
       "title": "Koszorú",
-      "details": "2025, olajfesték, papír,",
+      "details": "2025, olajfesték, papír",
       "images": [
         "mindensemmi-koszoru-2025-05"
       ]
     },
     "mindensemmi-teljesseg-forrasa-2020": {
       "title": "Teljesség forrása",
-      "details": "2020, 79 × 69 cm  akril,",
+      "details": "2020, 79 × 69 cm akril",
       "images": [
         "mindensemmi-teljesseg-forrasa-2020"
       ]

@@ -23,19 +23,30 @@ const descriptions=['Festmények és grafikák','Tájképek, 2017–2025','Feste
 const asset=(key,size=640)=>imageRecords[key].variants[String(size)].src;
 function imageSrcset(key){const choices=new Map();for(const v of Object.values(imageRecords[key].variants))choices.set(v.width,v.src);return [...choices].map(([width,src])=>src+' '+width+'w').join(', ');}
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function img(key,alt,hero=false){const m=imageRecords[key];return `<img draggable="false" src="${asset(key,hero?1600:640)}" srcset="${imageSrcset(key)}" sizes="${hero?'(max-width:560px) 90vw, 50vw':'(max-width:560px) 90vw, 40vw'}" width="${m.width}" height="${m.height}" alt="${esc(alt)}" ${hero?'fetchpriority="high"':'loading="lazy"'} decoding="async">`}
-function cards(){return `<div class="categories">${Object.entries(cats).map(([k,v],i)=>`<a class="category" href="#portfolio/${k}">${covers[i]?img(covers[i],v):'<div class="album-cover-empty"><span>Nincs még kép</span></div>'}<h3>${v}<span aria-hidden="true">↗</span></h3><small>${descriptions[i]||'Üres album'}</small></a>`).join('')}</div>`}
-function contact(){return `<div class="page-top"><span class="eyebrow">Beszélgessünk</span><h1>Kapcsolat</h1></div><section class="contact"><p>Egy alkotás megszólított? Kérdésed van a munkáimmal kapcsolatban? Írj e-mailt.</p><a class="email" href="mailto:laszlomirjamm@gmail.com">laszlomirjamm@gmail.com ↗</a></section>`}
+function imageSizes(layout){
+ const one='(min-width:1600px) 1440px, 90vw';
+ const two='(max-width:560px) 90vw, (min-width:1600px) 702px, calc(45vw - 18px)';
+ if(layout==='hero')return '(max-width:560px) 90vw, (min-width:1600px) 780px, 50vw';
+ if(layout==='cards')return '(max-width:560px) 90vw, (max-width:800px) calc(45vw - 14px), (min-width:1600px) 461px, calc(30vw - 19px)';
+ if(layout==='three')return '(max-width:560px) 90vw, (max-width:1000px) calc(45vw - 12px), (min-width:1600px) 460px, calc(30vw - 20px)';
+ if(layout==='about')return '(max-width:444px) 90vw, (max-width:800px) 400px, (min-width:1600px) 576px, 36vw';
+ if(layout==='single')return '(max-width:777px) 90vw, 700px';
+ return two;
+}
+function img(key,alt,hero=false,layout='two'){const m=imageRecords[key];return `<img draggable="false" src="${asset(key,hero?1600:640)}" srcset="${imageSrcset(key)}" sizes="${imageSizes(hero?'hero':layout)}" width="${m.width}" height="${m.height}" alt="${esc(alt)}" ${hero?'fetchpriority="high"':'loading="lazy"'} decoding="async">`}
+function cards(){return `<div class="categories">${Object.entries(cats).map(([k,v],i)=>`<a class="category" href="#portfolio/${k}">${covers[i]?img(covers[i],v,false,'cards'):'<div class="album-cover-empty"><span>Nincs még kép</span></div>'}<h3>${v}<span aria-hidden="true">↗</span></h3><small>${descriptions[i]||'Üres album'}</small></a>`).join('')}</div>`}
+function contact(){return `<div class="page-top"><span class="eyebrow">Beszélgessünk</span><h1>Kapcsolat</h1></div><section class="contact"><p>Egy alkotás megszólított? Kérdésed van a munkáimmal kapcsolatban? Írj e-mailt.</p><a class="email" href="mailto:laszlomirjamm@gmail.com">laszlomirjamm@gmail.com ↗</a><div class="email-copy"><button type="button" id="copy-email">${language==='en'?'Copy email address':'E-mail-cím másolása'}</button><p id="email-copy-status" role="status"></p><input id="email-copy-fallback" aria-label="E-mail" value="laszlomirjamm@gmail.com" readonly hidden></div></section>`}
 let gallery=[],current=0,activeAlbum='';
 function prepareGallery(){
  gallery=[];
+ main.querySelectorAll('.content-page h2,.content-page h3,.content-page h4').forEach(h=>{if(!h.textContent.trim())h.remove();});
  main.querySelectorAll('.content-page br').forEach(e=>e.replaceWith(document.createTextNode('\n')));
  main.querySelectorAll('.content-page [style]').forEach(e=>e.removeAttribute('style'));
  main.querySelectorAll('.content-page [onclick]').forEach(e=>e.removeAttribute('onclick'));
  main.querySelectorAll('.content-page img').forEach((old,i)=>{
   const key=old.getAttribute('data-image'),work=ART_WORKS[key];
   const title=work.title,details=tr(work.details),caption=[title,details].filter(Boolean).join(' · ');
-  const b=document.createElement('button');b.className='art-button';b.setAttribute('aria-label',caption+' — '+tr('nagyítás'));b.innerHTML=img(key,caption);old.replaceWith(b);b.addEventListener('click',()=>openImage(i));
+  const b=document.createElement('button');b.className='art-button';b.setAttribute('aria-label',caption+' — '+tr('nagyítás'));b.innerHTML=img(key,caption,false,old.closest?.('.mindensemmi-grid')?'three':old.closest?.('.nyomashatalma-container')?'single':'two');old.replaceWith(b);b.addEventListener('click',()=>openImage(i));
   const block=b.closest('.mindensemmi-item,.tajak-item');
   if(block){const label=block.querySelector('.project-description-per-image');label.innerHTML=`<p><span class="work-title" data-original-title lang="hu">${esc(title)}</span><span class="work-details">${esc(details)}</span></p>`;}
   gallery.push({key,title,details,caption});
@@ -81,10 +92,15 @@ function render(){gallery=[];pages=Object.fromEntries(Object.keys(ART_ALBUMS).ma
 if(!hash){document.title='László Mirjam — Művészeti portfólió';main.innerHTML=`<section class="hero"><div><span class="eyebrow">László Mirjam · Festészet és szobrászat</span><h1>László<br>Mirjam</h1><p>Festészet és szobrászat</p><a class="cta" href="#works">Fedezd fel az alkotásokat <span>↗</span></a></div><figure><a href="#portfolio/minden-semmi" aria-label="${language==='en'?'Fény — open the series':'Fény — a sorozat megnyitása'}">${img('mindensemmi-feny-2025','Fény, 2025, 250 × 150 cm, olajfesték',true)}</a><figcaption><span>Fény, 2025</span><span>Olajfesték · 250 × 150 cm</span></figcaption></figure></section><section class="section"><div class="section-head"><div><span class="eyebrow">A portfólió</span><h2>Alkotások</h2></div></div>${cards()}</section>`}
 else if(hash==='works'){document.title='Alkotások — László Mirjam';main.innerHTML=`<div class="page-top"><span class="eyebrow">A portfólió</span><h1>Alkotások</h1><p>Válassz egy albumot, és fedezd fel a műveket.</p></div>${cards()}`}
 else if(hash.startsWith('portfolio/')&&pages[hash.slice(10)]){const key=hash.slice(10);document.title=cats[key]+' — László Mirjam';main.innerHTML=`<div class="page-top"><a class="back" href="#works">← Összes témakör</a><span class="eyebrow">Alkotások</span><h1>${cats[key]}</h1></div><nav class="filters" aria-label="Témakörök">${Object.entries(cats).map(([k,v])=>`<a href="#portfolio/${k}" ${key===k?'aria-current="page"':''}>${v}</a>`).join('')}</nav>${pages[key]}<section class="section"><h2>Megszólított egy alkotás?</h2><a class="text-link" href="#contact">Írj nekem ↗</a></section>`;prepareGallery()}
-else if(hash==='about'){document.title='Rólam — László Mirjam';main.innerHTML=`<div class="page-top"><span class="eyebrow">László Mirjam</span><h1>Rólam</h1></div><section class="about-layout"><figure>${img('mindensemmi-teremtes-ereje-2020','Teremtés ereje, 2020, 70 × 50 cm, olajfesték, akril')}<figcaption class="note">Teremtés ereje, 2020 · 70 × 50 cm · olajfesték, akril</figcaption></figure><div>${ART_BIO[language]}<a class="text-link" href="#contact">Kapcsolat ↗</a></div></section>`}
+else if(hash==='about'){document.title='Rólam — László Mirjam';main.innerHTML=`<div class="page-top"><span class="eyebrow">László Mirjam</span><h1>Rólam</h1></div><section class="about-layout"><figure>${img('mindensemmi-teremtes-ereje-2020','Teremtés ereje, 2020, 70 × 50 cm, olajfesték, akril',false,'about')}<figcaption class="note">Teremtés ereje, 2020 · 70 × 50 cm · olajfesték, akril</figcaption></figure><div>${ART_BIO[language]}<a class="text-link" href="#contact">Kapcsolat ↗</a></div></section>`}
 else if(hash==='contact'){document.title='Kapcsolat — László Mirjam';main.innerHTML=contact();}
 else{main.innerHTML='<div class="page-top"><h1>Ez a témakör nem elérhető.</h1><a class="text-link" href="#works">Vissza az alkotásokhoz</a></div>'}
-arrangeBiography();translateTree(main);document.title=tr(document.title);window.scrollTo(0,0);if(hash)main.focus({preventScroll:true});updateMetadata();if(requestedImage){const i=gallery.findIndex(item=>item.key===requestedImage);if(i>=0)openImage(i,false);}}
+arrangeBiography();translateTree(main);
+const copyEmail=main.querySelector('#copy-email');if(copyEmail)copyEmail.addEventListener('click',async()=>{
+ const status=main.querySelector('#email-copy-status'),field=main.querySelector('#email-copy-fallback');
+ try{await navigator.clipboard.writeText(field.value);status.textContent=language==='en'?'Email address copied.':'E-mail-cím másolva.';field.hidden=true;}
+ catch{field.hidden=false;field.focus();field.select();status.textContent=language==='en'?'Copy the selected email address.':'Másold ki a kijelölt e-mail-címet.';}
+});document.title=tr(document.title);window.scrollTo(0,0);if(hash)main.focus({preventScroll:true});updateMetadata();if(requestedImage){const i=gallery.findIndex(item=>item.key===requestedImage);if(i>=0)openImage(i,false);}}
 
 function writeImageRoute(replace){if(!activeAlbum)return;const url=new URL(location.href);url.hash='portfolio/'+activeAlbum+'/art/'+gallery[current].key;history[replace?'replaceState':'pushState'](null,'',url);}
 function closeViewer(){viewer.close();const url=new URL(location.href);url.hash='portfolio/'+activeAlbum;history.replaceState(null,'',url);document.title=(cats[activeAlbum]||tr('Alkotások'))+' — László Mirjam';updateMetadata();}

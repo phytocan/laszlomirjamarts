@@ -65,3 +65,34 @@ header{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:3
 
 .work-title:empty,#viewer #caption:empty{display:none}
 .viewer-sharing{width:230px;max-width:42%;height:100%;overflow:auto;flex-shrink:0;text-align:right;scrollbar-width:thin}#viewer #share-button{border-radius:20px;padding:0 16px;min-height:36px;font-size:11px;width:auto}#share-link{width:100%;margin:8px 0 0;padding:7px;background:#303632;border:1px solid #ffffff40;border-radius:4px;color:#f7f4ec;font:11px Arial}#share-status{font-size:10px;line-height:1.4;margin-top:6px;color:#c3c4ba}.viewer-sharing #viewer-hint{display:block;margin-top:7px}@media(max-width:560px){.viewer-sharing{width:125px;max-width:40%}#viewer #share-button{padding:0 10px;font-size:10px}.viewer-sharing #viewer-hint{display:none}}
+
+/* Responsive artwork scale and compact, invariant viewer frame. */
+@media(min-width:561px) and (max-width:1000px){
+ .mindensemmi-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 24px}
+ .mindensemmi-column{display:contents}
+}
+.category img{height:auto;aspect-ratio:4/3;max-height:none;padding:16px}
+@media(max-width:560px){.category img{aspect-ratio:1/1;padding:18px}}
+#viewer[open]{grid-template-rows:58px minmax(0,1fr) 100px;gap:14px}
+#viewer .viewer-bottom{padding-top:12px;gap:20px}
+#viewer #caption{font-size:clamp(20px,2.1vw,28px)}
+#viewer .viewer-arrow:hover{transform:none}
+#viewer .viewer-sharing{width:190px}
+#viewer #share-button{min-height:44px}
+@media(max-width:560px){
+ #viewer[open]{grid-template-rows:56px minmax(0,1fr) 110px;gap:10px}
+ #viewer .viewer-sharing{width:112px;max-width:35%}
+ #viewer .viewer-bottom{gap:12px}
+ #viewer #caption{font-size:21px}
+}
+@media(max-height:500px){
+ #viewer[open]{grid-template-rows:42px minmax(0,1fr) 72px;gap:8px}
+ #viewer .viewer-bottom{padding-top:6px}
+ #viewer #caption{font-size:18px}
+ .viewer-sharing #viewer-hint{display:none}
+}
+.email-copy{margin-top:24px}
+#copy-email{border:1px solid var(--line);background:transparent;color:var(--ink);padding:11px 18px;min-height:44px}
+#copy-email:hover{border-color:var(--accent);color:var(--accent)}
+.contact #email-copy-status{font-size:13px;margin:10px 0;color:var(--muted)}
+#email-copy-fallback{width:min(100%,360px);padding:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
